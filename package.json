@@ -1,0 +1,26 @@
+{
+  "name": "response-embedtag",
+  "version": "0.0.0",
+  "description": "Parse and validate response-configuration",
+  "main": "./embed-tag.js",
+  "private": true,
+  "dependencies": {},
+  "scripts": {
+    "test": "gulp && mocha",
+    "build": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-traceur": "^0.6.0",
+    "es6-transpiler": "^0.7.13-5",
+    "gulp-es6-transpiler": "^0.1.3",
+    "mocha": "^1.19.0",
+    "gulp-mocha": "^0.4.1",
+    "expect.js": "^0.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bengler/response-config"
+  },
+  "author": "Bengler AS"
+}
