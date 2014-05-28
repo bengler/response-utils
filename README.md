@@ -42,11 +42,13 @@ var result = embedTag.parse()
     }
   }
   
-  // Any errors that occurred while reading configuration. If this is not empty, the response embed can not be initialized
+  // Any errors that occurred while reading configuration. If this is not empty, the response embed 
+  // can not be initialized
   errors: [],
 
   // Any warnings that occurred while reading configuration.
-  // If this is not empty, the response embed can be intialized, but some configuration values are probably just guesses
+  // If this is not empty, the response embed can be intialized, but some configuration values are 
+  // probably just guesses
   warnings: []
 }
 
