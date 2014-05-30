@@ -1,4 +1,14 @@
-# Response embed tag parser
+# Response utils
+
+A set of utitilties for response:
+
+1. `topicUrl.fromConfig()` returns a topic url for a given response config
+1. `EmbedTagParser` Parses a response embed tag and returns a config object.
+
+## Response embed tag parser
+
+
+## Response embed tag parser
 
 Read and validate response embed config from different sources
 
@@ -21,7 +31,9 @@ Read and validate response embed config from different sources
 
 ```javascript
 
-var EmbedTag = require("response-embedtag");
+
+var EmbedTag = require("response-util").EmbedTag;
+// OR: var EmbedTag = require("response-util/embed-tag");
 
 var embedTag = new EmbedTag.fromElement(element);
 

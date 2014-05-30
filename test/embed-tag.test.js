@@ -1,4 +1,4 @@
-var EmbedConfig = require("..");
+var EmbedConfig = require("..").EmbedTag;
 
 var expect = require("expect.js");
 var test = require("tap").test;
@@ -10,7 +10,7 @@ global.document = {
   }
 };
 
-var examples = require("./examples");
+var examples = require("./tag-examples");
 
 describe("EmbedConfig", function () {
 

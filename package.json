@@ -1,12 +1,12 @@
 {
-  "name": "response-embedtag",
+  "name": "response-utils",
   "version": "0.0.0",
-  "description": "Parse and validate response-configuration",
-  "main": "./embed-tag.js",
+  "description": "A set of utitilties for response",
+  "main": "./index.js",
   "private": true,
   "dependencies": {},
   "scripts": {
-    "test": "gulp && mocha",
+    "test": "gulp && mocha -R spec",
     "build": "gulp"
   },
   "devDependencies": {
