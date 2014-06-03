@@ -1,4 +1,4 @@
-var topicUrl = require("../").topicUrl;
+var topicUrl = require("..").topicUrl;
 
 var expect = require("expect.js");
 var test = require("tap").test;

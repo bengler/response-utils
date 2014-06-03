@@ -2,7 +2,7 @@
   "name": "response-utils",
   "version": "0.0.0",
   "description": "A set of utitilties for response",
-  "main": "./index.js",
+  "main": "./lib/index.js",
   "private": true,
   "dependencies": {},
   "scripts": {
