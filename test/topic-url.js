@@ -1,7 +1,7 @@
 var topicUrl = require("..").topicUrl;
 
 var expect = require("expect.js");
-var test = require("tap").test;
+var url = require("url");
 
 describe("topicUrl", function () {
   describe("#fromConfig", function () {
@@ -113,7 +113,7 @@ describe("topicUrl", function () {
       ];
       expectations.forEach(function (expectation) {
           it(expectation.it, function () {
-          expect(topicUrl.fromConfig(expectation.config)).to.eql(expectation.url);
+          expect(url.format(topicUrl.fromConfig(expectation.config))).to.eql(expectation.url);
         });
       });
     });

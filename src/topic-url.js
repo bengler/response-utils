@@ -17,7 +17,10 @@ function fromConfig(config) {
   if (config.hash_tag) {
     qs.hash_tag = config.hash_tag
   }
-  return ['/topics',config.publication, config.kind, config.article.id].join("/")+'?'+querystring.stringify(qs)
+  return {
+    pathname: ['/topics', config.publication, config.kind, config.article.id].join("/"),
+    query: qs
+  }
 }
 
 module.exports = {
