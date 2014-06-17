@@ -1,6 +1,6 @@
 {
   "name": "response-utils",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A set of utitilties for response",
   "main": "./lib/index.js",
   "private": true,
