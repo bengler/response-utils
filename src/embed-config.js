@@ -23,6 +23,7 @@ class EmbedConfig {
       "data-sprig-component": 'response',
       "data-kind": config.kind,
       "data-title": config.title,
+      "data-publication": config.publication,
       "data-article-id": config.article.id,
       "data-article-title": config.article.title,
       "data-article-url": config.article.url
@@ -46,6 +47,22 @@ class EmbedConfig {
     return `<div ${serializedAttrs}></div>`
   } 
   
+  static toTopicDocument(config) {
+    var doc = {
+      article_id: config.article.id,
+      article_title: config.article.title,
+      article_url: config.article.url,
+      title: config.title,
+      kind: config.kind,
+      publication: config.publication,
+      sharing: config.sharing || {}
+    };
+    if (config.kind === 'imagestream') {
+      doc.hash_tag = config.hashTag;
+    }
+    return doc;
+  } 
+  
   constructor(config) {
     this.config = config;
   }
@@ -59,6 +76,7 @@ class EmbedConfig {
       title,
       kind,
       hashTag,
+      publication,
       articleTitle,
       articleUrl,
       articleId,
@@ -71,7 +89,11 @@ class EmbedConfig {
       articleTitle = document.title;
     }
 
-    if (!config.kind) {
+    if (!publication) {
+      error('data-publication', 'Missing required attribute publication');
+    }
+
+    if (!kind) {
       error('kind', 'Missing required attribute data-kind');
     }
     else if (KINDS.indexOf(kind) === -1) {
@@ -128,6 +150,7 @@ class EmbedConfig {
       config: {
         kind: kind,
         title: title,
+        publication: publication,
         article: {
           id: ''+articleId,
           title: articleTitle,
@@ -147,7 +170,7 @@ class EmbedConfig {
         result.config.hashTag = hashTag
       }
       if (enableImageSharing) {
-        result.config.sharing.images = true;
+        result.config.sharing.enableImageSharing = true;
         if (!facebookAppId) {
           warning('facebook-app-id', `Please provide a facebook app id when enabling image sharing`)
         }
