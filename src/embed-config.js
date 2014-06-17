@@ -54,9 +54,17 @@ class EmbedConfig {
       article_url: config.article.url,
       title: config.title,
       kind: config.kind,
-      publication: config.publication,
-      sharing: config.sharing || {}
+      publication: config.publication
     };
+
+    if (config.sharing) {
+      doc.sharing = {
+        enable_image_sharing: config.sharing.enableImageSharing,
+        facebook: {
+          app_id: config.sharing.facebook.appId
+        }
+      }
+    }
     if (config.kind === 'imagestream') {
       doc.hash_tag = config.hashTag;
     }
