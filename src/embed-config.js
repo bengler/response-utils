@@ -17,6 +17,35 @@ class EmbedConfig {
     return new EmbedConfig(data);
   }
 
+  static toDataAttributes(config) {
+    
+    var attributes = {
+      "data-sprig-component": 'response',
+      "data-kind": config.kind,
+      "data-title": config.title,
+      "data-article-id": config.article.id,
+      "data-article-title": config.article.title,
+      "data-article-url": config.article.url
+    };
+
+    if (config.kind === 'imagestream') {
+      if ('hashTag' in config) {
+        attributes["data-hash-tag"] = config.hashTag;
+      }
+      if ('sharing' in config) {
+        attributes['data-enable-image-sharing'] = config.sharing.enableImageSharing;
+        attributes['data-facebook-app-id'] = config.sharing.facebookAppId;
+      }
+    }
+    return attributes;
+  }
+
+  static toEmbedTagHTML(config) {
+    var attrs = EmbedConfig.toDataAttributes(config);
+    var serializedAttrs = Object.keys(attrs).map((attr)=> `${attr}=${attrs[attr]}`).join(" ");
+    return `<div ${serializedAttrs}></div>`
+  } 
+  
   constructor(config) {
     this.config = config;
   }
@@ -26,7 +55,16 @@ class EmbedConfig {
     let errors = [];
 
     let config = this.config;
-    let {title, kind, hashTag, articleTitle, articleUrl, articleId} = config;
+    let {
+      title,
+      kind,
+      hashTag,
+      articleTitle,
+      articleUrl,
+      articleId,
+      enableImageSharing,
+      facebookAppId,
+    } = config;
 
     if (!articleTitle) {
       warning('article-title', 'Missing recommended attribute data-article-title. Falling back to page title');
@@ -58,10 +96,8 @@ class EmbedConfig {
 
         warning('hash-tag', `Found invalid characters in hashtag.
           Hashtags can only contain alphanumeric characters or "-" and "_". Leading hashes is not needed.
-          HashTag will be normalized to: ${hashTag}.`);
-        
+          HashTag will be normalized to: ${hashTag}.`);        
       }
-      warning('hash-tag', 'Hash tag given on non-imagestream response type');
     }
 
     if (!articleUrl) {
@@ -77,7 +113,7 @@ class EmbedConfig {
       catch (e) {
       }
 
-      if (!parsedArticleUrl || !parsedArticleUrl.protocol || parsedArticleUrl.host) {
+      if (!parsedArticleUrl || !parsedArticleUrl.protocol || !parsedArticleUrl.host) {
         warning('article-url', `The specified article-url has an invalid value: '${articleUrl}'.
         The article URL must be a fully qualified url (including http://).
         Using current location (${document.location.href}) as fallback for now.`);
@@ -96,6 +132,9 @@ class EmbedConfig {
           id: ''+articleId,
           title: articleTitle,
           url: removeQueryParameter(articleUrl, 'response_auth_trace')
+        },
+        sharing: {
+          facebook: {}
         }
       },
       valid: errors.length == 0,
@@ -103,8 +142,19 @@ class EmbedConfig {
       errors: errors
     };
 
-    if (kind === 'imagestream' && hashTag) {
-      result.config.hashTag = hashTag
+    if (kind === 'imagestream') {
+      if (hashTag) {
+        result.config.hashTag = hashTag
+      }
+      if (enableImageSharing) {
+        result.config.sharing.images = true;
+        if (!facebookAppId) {
+          warning('facebook-app-id', `Please provide a facebook app id when enabling image sharing`)
+        }
+        else {
+          result.config.sharing.facebook.appId = facebookAppId
+        }
+      }
     }
 
     return result;

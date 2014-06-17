@@ -1,4 +1,4 @@
 module.exports = {
-  EmbedTag: require("./embed-tag"),
+  EmbedConfig: require("./embed-config"),
   topicUrl: require("./topic-url")
 };
