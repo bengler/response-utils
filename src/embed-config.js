@@ -26,8 +26,13 @@ class EmbedConfig {
       "data-publication": config.publication,
       "data-article-id": config.article.id,
       "data-article-title": config.article.title,
-      "data-article-url": config.article.url
+      "data-article-url": config.article.url,
     };
+
+    if ('likes' in config) {
+      attributes["data-likes-kind"] = config.likes.kind;
+      attributes["data-likes-verb"] = config.likes.verb;
+    }
 
     if (config.kind === 'imagestream') {
       if ('hashTag' in config) {
@@ -65,6 +70,12 @@ class EmbedConfig {
         }
       }
     }
+    if (config.likes) {
+      doc.likes = {
+        kind: config.likes.kind,
+        verb: config.likes.verb
+      }
+    }
     if (config.kind === 'imagestream') {
       doc.hash_tag = config.hashTag;
     }
@@ -90,6 +101,8 @@ class EmbedConfig {
       articleId,
       enableImageSharing,
       facebookAppId,
+      likesKind,
+      likesVerb,
     } = config;
 
     if (!articleTitle) {
@@ -166,13 +179,20 @@ class EmbedConfig {
         },
         sharing: {
           facebook: {}
-        }
+        },
       },
       valid: errors.length == 0,
       warnings: warnings,
       errors: errors
     };
 
+    if (likesKind || likesVerb) {
+      result.config.likes = {
+        kind: likesKind,
+        verb: likesVerb
+      };
+    }
+    
     if (kind === 'imagestream') {
       if (hashTag) {
         result.config.hashTag = hashTag
