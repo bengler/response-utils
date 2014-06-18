@@ -5,7 +5,7 @@ const KINDS = ['imagestream', 'conversation', 'question', 'procon'];
 const STRIP_HASHTAG = /[^a-z0-9\-_æøå]/g;
 
 class EmbedConfig {
-  
+
   static fromDomNode(domNode) {
     const dattrs = require("./util/data-attrs");
     return EmbedConfig.fromDataAttributes(dattrs(domNode));
@@ -18,7 +18,7 @@ class EmbedConfig {
   }
 
   static toDataAttributes(config) {
-    
+
     var attributes = {
       "data-sprig-component": 'response',
       "data-kind": config.kind,
@@ -50,8 +50,8 @@ class EmbedConfig {
     var attrs = EmbedConfig.toDataAttributes(config);
     var serializedAttrs = Object.keys(attrs).map((attr)=> `${attr}=${attrs[attr]}`).join(" ");
     return `<div ${serializedAttrs}></div>`
-  } 
-  
+  }
+
   static toTopicDocument(config) {
     var doc = {
       article_id: config.article.id,
@@ -65,7 +65,9 @@ class EmbedConfig {
     if (config.sharing) {
       doc.sharing = {
         enable_image_sharing: config.sharing.enableImageSharing,
-        facebook: {
+      }
+      if (config.sharing.facebook) {
+        doc.sharing.facebook = {
           app_id: config.sharing.facebook.appId
         }
       }
@@ -80,8 +82,8 @@ class EmbedConfig {
       doc.hash_tag = config.hashTag;
     }
     return doc;
-  } 
-  
+  }
+
   constructor(config) {
     this.config = config;
   }
@@ -103,7 +105,7 @@ class EmbedConfig {
       facebookAppId,
       likesKind,
       likesVerb,
-    } = config;
+      } = config;
 
     if (!articleTitle) {
       warning('article-title', 'Missing recommended attribute data-article-title. Falling back to page title');
@@ -139,7 +141,7 @@ class EmbedConfig {
 
         warning('hash-tag', `Found invalid characters in hashtag.
           Hashtags can only contain alphanumeric characters or "-" and "_". Leading hashes is not needed.
-          HashTag will be normalized to: ${hashTag}.`);        
+          HashTag will be normalized to: ${hashTag}.`);
       }
     }
 
@@ -192,7 +194,7 @@ class EmbedConfig {
         verb: likesVerb
       };
     }
-    
+
     if (kind === 'imagestream') {
       if (hashTag) {
         result.config.hashTag = hashTag
