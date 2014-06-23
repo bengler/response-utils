@@ -6,6 +6,9 @@ const STRIP_HASHTAG = /[^a-z0-9\-_æøå]/ig;
 
 class EmbedConfig {
 
+  static normalizeHashTag(hashTag) {
+    return hashTag.replace(STRIP_HASHTAG, '')
+  }
   static fromDomNode(domNode) {
     const dattrs = require("./util/data-attrs");
     return EmbedConfig.fromDataAttributes(dattrs(domNode));
