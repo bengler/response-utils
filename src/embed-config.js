@@ -2,7 +2,7 @@ const url = require("url");
 const removeQueryParameter = require("./util/remove-query-parameter");
 
 const KINDS = ['imagestream', 'conversation', 'question', 'procon'];
-const STRIP_HASHTAG = /[^a-z0-9\-_æøå]/g;
+const STRIP_HASHTAG = /[^a-z0-9\-_æøå]/ig;
 
 class EmbedConfig {
 
