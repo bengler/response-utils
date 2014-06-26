@@ -72,7 +72,7 @@ the corresponding data-attribute that had the wrong value
 
 ## Development
 
-### Gettings started:
+### Getting started:
 
      $ npm install
 
@@ -81,6 +81,10 @@ the corresponding data-attribute that had the wrong value
 Remember to build project before bumping version and pushing a new version
 
      $ npm run build
+
+You can also watch source files and build project when a file changes with
+
+     $ gulp watch
 
 ### Run tests
 
