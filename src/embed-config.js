@@ -29,12 +29,15 @@ class EmbedConfig {
       "data-publication": config.publication,
       "data-article-id": config.article.id,
       "data-article-title": config.article.title,
-      "data-article-url": config.article.url,
+      "data-article-url": config.article.url
     };
 
     if ('likes' in config) {
       attributes["data-likes-kind"] = config.likes.kind;
-      attributes["data-likes-verb"] = config.likes.verb;
+      if ('label' in config.likes) {
+        attributes["data-likes-label-default"] = config.likes.label.default;
+        attributes["data-likes-label-given"] = config.likes.label.given
+      }
     }
 
     if (config.kind === 'imagestream') {
@@ -68,7 +71,7 @@ class EmbedConfig {
     if (config.sharing) {
       doc.sharing = {
         enable_image_sharing: config.sharing.enableImageSharing,
-      }
+      };
       if (config.sharing.facebook) {
         doc.sharing.facebook = {
           app_id: config.sharing.facebook.appId
@@ -79,6 +82,12 @@ class EmbedConfig {
       doc.likes = {
         kind: config.likes.kind,
         verb: config.likes.verb
+      };
+      if (config.likes.label) {
+        doc.likes.label = {
+          "default": config.likes.label.default,
+          given: config.likes.label.given
+        }
       }
     }
     if (config.kind === 'imagestream') {
@@ -107,7 +116,8 @@ class EmbedConfig {
       enableImageSharing,
       facebookAppId,
       likesKind,
-      likesVerb,
+      likesLabelDefault,
+      likesLabelGiven,
       } = config;
 
     if (!articleTitle) {
@@ -184,18 +194,25 @@ class EmbedConfig {
         },
         sharing: {
           facebook: {}
-        },
+        }
       },
       valid: errors.length == 0,
       warnings: warnings,
       errors: errors
     };
 
-    if (likesKind || likesVerb) {
-      result.config.likes = {
-        kind: likesKind,
-        verb: likesVerb
-      };
+    if (likesKind || likesLabelDefault || likesLabelGiven) {
+      var likesCfg = result.config.likes = {};
+
+      if (likesKind) {
+        likesCfg.kind = likesKind;
+      }
+      if (likesLabelDefault || likesLabelGiven) {
+        likesCfg.label = {
+          'default': likesLabelDefault,
+          given: likesLabelGiven
+        };
+      }
     }
 
     if (kind === 'imagestream') {
