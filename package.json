@@ -1,9 +1,8 @@
 {
-  "name": "response-utils",
+  "name": "@bengler/response-utils",
   "version": "0.1.9",
   "description": "A set of utitilties for response",
   "main": "./lib/index.js",
-  "private": true,
   "dependencies": {},
   "scripts": {
     "test": "gulp && mocha -R spec",
