@@ -82,6 +82,9 @@ class EmbedConfig {
         }
       }
     }
+    if ('previewCount' in config) {
+      doc.previewCount = config.previewCount;
+    }
     if (config.likes) {
       doc.likes = {
         kind: config.likes.kind,
