@@ -6,7 +6,8 @@
   "dependencies": {},
   "scripts": {
     "test": "gulp && mocha -R spec",
-    "build": "gulp"
+    "build": "gulp",
+    "pre-publish": "npm run build"
   },
   "devDependencies": {
     "es6-transpiler": "^0.7.13-5",
