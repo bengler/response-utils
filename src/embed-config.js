@@ -32,6 +32,10 @@ class EmbedConfig {
       "data-article-url": config.article.url
     };
 
+    if ('previewCount' in config) {
+        attributes["data-preview-count"] = config.previewCount;
+    }
+
     if ('likes' in config) {
       attributes["data-likes-kind"] = config.likes.kind;
       if ('label' in config.likes) {
@@ -108,6 +112,7 @@ class EmbedConfig {
     let {
       title,
       kind,
+      previewCount,
       hashTag,
       publication,
       articleTitle,
@@ -200,6 +205,10 @@ class EmbedConfig {
       warnings: warnings,
       errors: errors
     };
+
+    if (previewCount || previewCount === 0) {
+      result.config.previewCount = previewCount;
+    }
 
     if (likesKind || likesLabelDefault || likesLabelGiven) {
       var likesCfg = result.config.likes = {};

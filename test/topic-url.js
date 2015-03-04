@@ -49,43 +49,18 @@ describe("topicUrl", function () {
               id: 1337
             }
           },
-          url: '/topics/oa/imagestream/1337?title=&article_url=&article_title='
+          url: '/topics/oa/imagestream/1337'
         },
         {
-          it: "builds the topic url",
+          it: "escapes weird characters from the article id",
           config: {
             publication: 'oa',
             kind: 'imagestream',
             article: {
-              id: 1337,
-              title: 'Foo bar article title'
+              id: 'as?df=&#'
             }
           },
-          url: '/topics/oa/imagestream/1337?title=&article_url=&article_title=Foo%20bar%20article%20title'
-        },
-        {
-          it: "properly escapes the article url",
-          config: {
-            publication: 'oa',
-            kind: 'imagestream',
-            article: {
-              id: '1337',
-              url: 'http://example.com/this/is?an=url&with&a=querystring'
-            }
-          },
-          url: '/topics/oa/imagestream/1337?title=&article_url=http%3A%2F%2Fexample.com%2Fthis%2Fis%3Fan%3Durl%26with%26a%3Dquerystring&article_title='
-        },
-        {
-          it: "escapes anything from article url, really",
-          config: {
-            publication: 'oa',
-            kind: 'imagestream',
-            article: {
-              id: '1337',
-              url: '&an=url&with&a=querystring'
-            }
-          },
-          url: '/topics/oa/imagestream/1337?title=&article_url=%26an%3Durl%26with%26a%3Dquerystring&article_title='
+          url: '/topics/oa/imagestream/'+encodeURIComponent('as?df=&#')
         },
         {
           it: "accepts long strange float-like values for article id",
@@ -96,19 +71,7 @@ describe("topicUrl", function () {
               id: '1.232323432333294743987894787337'
             }
           },
-          url: '/topics/oa/imagestream/1.232323432333294743987894787337?title=&article_url=&article_title='
-        },
-        {
-          it: "escapes title parameter too",
-          config: {
-            title: 'this is response title',
-            publication: 'oa',
-            kind: 'imagestream',
-            article: {
-              id: '1337'
-            }
-          },
-          url: '/topics/oa/imagestream/1337?title=this%20is%20response%20title&article_url=&article_title='
+          url: '/topics/oa/imagestream/1.232323432333294743987894787337'
         }
       ];
       expectations.forEach(function (expectation) {

@@ -1,4 +1,4 @@
-var EmbedConfig = require("..").EmbedTag;
+var EmbedConfig = require("..").EmbedConfig;
 
 var expect = require("expect.js");
 var test = require("tap").test;
@@ -19,6 +19,10 @@ describe("EmbedConfig", function () {
       examples.valid.forEach(function (dataAttrs) {
         var config = EmbedConfig.fromDataAttributes(dataAttrs);
         var result = config.parse();
+        if (!result.valid) {
+          console.log(dataAttrs, result)
+        }
+
         expect(result.valid).to.be(true)
       })
     });
@@ -121,7 +125,16 @@ describe("EmbedConfig", function () {
         var result = EmbedConfig.fromDataAttributes(attrs).parse();
         expect(result.config).to.have.key('hashTag');
         expect(result.config.hashTag).to.be('foo');
-      });      
+      });
+      it("passes through the previewCount option", function () {
+        var attrs = {
+          articleId: 'foo',
+          kind: 'imagestream',
+          previewCount: 2
+        };
+        var result = EmbedConfig.fromDataAttributes(attrs).parse();
+        expect(result.config.previewCount).to.be(2);
+      });
     })
   });
 });
