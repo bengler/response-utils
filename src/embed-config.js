@@ -198,7 +198,7 @@ class EmbedConfig {
       let potentialSubscribers = autoSubscribe.replace(' ', '').split(',');
       let verifiedSubscribers = [];
       potentialSubscribers.forEach(function (subscriber) {
-        if (subscriber.indexOf('@') > 0 || parseInt(subscriber) > 0) {
+        if (subscriber.indexOf('@') > 0 || /^\d+$/.test(subscriber)) {
           verifiedSubscribers.push(subscriber);
         } else {
           warning('autoSubscribe', `Subscriber '${subscriber}' is neither a valid email address nor a valid ID.`);
