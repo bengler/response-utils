@@ -32,6 +32,10 @@ class EmbedConfig {
       "data-article-url": config.article.url
     };
 
+    if ('autoSubscribe' in config) {
+      attributes['data-auto-subscribe'] = config.autoSubscribe;
+    }
+
     if ('previewCount' in config) {
         attributes["data-preview-count"] = config.previewCount;
     }
@@ -126,6 +130,7 @@ class EmbedConfig {
       likesKind,
       likesLabelDefault,
       likesLabelGiven,
+      autoSubscribe
       } = config;
 
     if (!articleTitle) {
@@ -187,7 +192,19 @@ class EmbedConfig {
         // Remove response_auth_trace from article url (if it is originating from document.location.href)
         articleUrl = document.location.href;
       }
+    }
 
+    if (autoSubscribe) {
+      let potentialSubscribers = autoSubscribe.replace(' ', '').split(',');
+      let verifiedSubscribers = [];
+      potentialSubscribers.forEach(function (subscriber) {
+        if (subscriber.indexOf('@') > 0 || parseInt(subscriber) > 0) {
+          verifiedSubscribers.push(subscriber);
+        } else {
+          warning('autoSubscribe', `Subscriber '${subscriber}' is neither a valid email address nor a valid ID.`);
+        }
+      });
+      autoSubscribe = verifiedSubscribers;
     }
 
     let result = {
@@ -202,7 +219,8 @@ class EmbedConfig {
         },
         sharing: {
           facebook: {}
-        }
+        },
+        autoSubscribe: autoSubscribe,
       },
       valid: errors.length == 0,
       warnings: warnings,

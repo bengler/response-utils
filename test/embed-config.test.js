@@ -1,7 +1,5 @@
 var EmbedConfig = require("..").EmbedConfig;
-
 var expect = require("expect.js");
-var test = require("tap").test;
 
 global.document = {
   title: "Foo title",
@@ -44,6 +42,29 @@ describe("EmbedConfig", function () {
       expect(result.config.article.title).to.be(document.title);
       expect(result.config.article.url).to.be(document.location.href);
 
+    });
+
+    describe('autoSubscribe', function () {
+      it("should allow email addresses in the autoSubscribe field", function () {
+        var result = EmbedConfig.fromDataAttributes({kind: 'conversation', autoSubscribe: 'line@example.com,lars@example.com'}).parse();
+        expect(result.config.autoSubscribe).to.be.an(Array);
+        expect(result.config.autoSubscribe.length).to.be(2);
+        expect(result.config.autoSubscribe).to.contain('line@example.com');
+        expect(result.config.autoSubscribe).to.contain('lars@example.com');
+      });
+
+      it("should allow IDs in the autoSubscribe field", function () {
+        var result = EmbedConfig.fromDataAttributes({kind: 'conversation', autoSubscribe: 'line@example.com,234'}).parse();
+        expect(result.config.autoSubscribe.length).to.be(2);
+        expect(result.config.autoSubscribe).to.contain('line@example.com');
+        expect(result.config.autoSubscribe).to.contain('234');
+      });
+
+      it("should remove messed up content in the autoSubscribe field", function () {
+        var result = EmbedConfig.fromDataAttributes({kind: 'conversation', autoSubscribe: 'line@example.com,lars.example.com,busegutten'}).parse();
+        expect(result.config.autoSubscribe.length).to.be(1);
+        expect(result.config.autoSubscribe).to.contain('line@example.com');
+      });
     });
 
     describe('articleId', function () {
