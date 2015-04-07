@@ -89,6 +89,9 @@ class EmbedConfig {
     if ('previewCount' in config) {
       doc.previewCount = config.previewCount;
     }
+    if ('autoSubscribe' in config) {
+      doc.auto_subscribe = config.autoSubscribe;
+    }
     if (config.likes) {
       doc.likes = {
         kind: config.likes.kind,
