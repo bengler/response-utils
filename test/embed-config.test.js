@@ -67,6 +67,13 @@ describe("EmbedConfig", function () {
       });
     });
 
+    describe('category', function () {
+      it("should allow a string in the category field", function () {
+        var result = EmbedConfig.fromDataAttributes({kind: 'procon', category: 'opinion'}).parse();
+        expect(result.config.category).to.be('opinion');
+      });
+    });
+
     describe('articleId', function () {
       it("should allow strings as IDs", function () {
         var result = EmbedConfig.fromDataAttributes({kind: 'conversation', articleId: 'foobar'}).parse();
