@@ -36,6 +36,10 @@ class EmbedConfig {
       attributes['data-auto-subscribe'] = config.autoSubscribe;
     }
 
+    if ('category' in config) {
+      attributes['data-category'] = config.category;
+    }
+
     if ('previewCount' in config) {
         attributes["data-preview-count"] = config.previewCount;
     }
@@ -92,6 +96,9 @@ class EmbedConfig {
     if ('autoSubscribe' in config) {
       doc.auto_subscribe = config.autoSubscribe;
     }
+    if ('category' in config) {
+      doc.category = config.category;
+    }
     if (config.likes) {
       doc.likes = {
         kind: config.likes.kind,
@@ -133,7 +140,8 @@ class EmbedConfig {
       likesKind,
       likesLabelDefault,
       likesLabelGiven,
-      autoSubscribe
+      autoSubscribe,
+      category
       } = config;
 
     if (!articleTitle) {
@@ -210,6 +218,12 @@ class EmbedConfig {
       autoSubscribe = verifiedSubscribers;
     }
 
+    if (category) {
+      if (category.indexOf(' ') > 0) {
+        warning('category', `Category '${category}' should not include a whitespace.`);
+      }
+    }
+
     let result = {
       config: {
         kind: kind,
@@ -224,6 +238,7 @@ class EmbedConfig {
           facebook: {}
         },
         autoSubscribe: autoSubscribe,
+        category: category
       },
       valid: errors.length == 0,
       warnings: warnings,
