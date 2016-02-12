@@ -1,14 +1,14 @@
-var url = require("url");
+const url = require('url')
 
-module.exports = removeQueryParameter;
+module.exports = removeQueryParameter
 // Takes an url and a query parameter and returns the url with the parameter removed
 function removeQueryParameter(_url, parameter) {
-  let parsed = url.parse(_url, true, true);
+  const parsed = url.parse(_url, true, true)
 
   if (parameter in parsed.query) {
-    delete parsed.search;
-    delete parsed.query[parameter];
+    delete parsed.search
+    delete parsed.query[parameter]
   }
 
-  return url.format(parsed);
+  return url.format(parsed)
 }

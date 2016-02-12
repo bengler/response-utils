@@ -1,24 +1,24 @@
 module.exports = {
   valid: [
     {
-      publication: "agurknytt",
+      publication: 'agurknytt',
       kind: 'imagestream',
       articleId: '2432332342',
       articleTitle: 'foo',
       articleUrl: 'http://foo.bar/baz'
     },
     {
-      publication: "potetnytt",
+      publication: 'potetnytt',
       kind: 'conversation',
       articleId: '241.32332342'
     },
     {
-      publication: "løknytt",
+      publication: 'løknytt',
       kind: 'question',
       articleId: '2432332342'
     },
     {
-      publication: "tomatnytt",
+      publication: 'tomatnytt',
       kind: 'procon',
       articleId: '2432332342'
     }

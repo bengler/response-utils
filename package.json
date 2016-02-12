@@ -3,21 +3,22 @@
   "version": "0.5.3",
   "description": "A set of utitilties for response",
   "main": "./lib/index.js",
-  "dependencies": {},
+  "dependencies": {
+  },
   "scripts": {
-    "test": "gulp && mocha -R spec",
-    "build": "gulp",
+    "test": "npm run build && mocha -R spec && npm run lint",
+    "build": "babel src --out-dir lib",
+    "lint": "eslint src",
     "prepublish": "npm run build"
   },
   "devDependencies": {
-    "es6-transpiler": "^0.7.13-5",
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "eslint": "^1.10.3",
+    "eslint-config-bengler": "^0.5.5",
     "expect.js": "^0.3.1",
-    "gulp": "^3.6.2",
-    "gulp-es6-transpiler": "^0.1.3",
-    "gulp-mocha": "^0.4.1",
-    "gulp-traceur": "^0.6.0",
-    "gulp-watch": "^0.6.8",
-    "mocha": "^1.19.0"
+    "mocha": "^2.4.5"
   },
   "repository": {
     "type": "git",
