@@ -1,10 +1,9 @@
 {
   "name": "@bengler/response-utils",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "A set of utitilties for response",
   "main": "./lib/index.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "test": "npm run build && mocha -R spec && npm run lint",
     "build": "babel src --out-dir lib",
