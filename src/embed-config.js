@@ -233,12 +233,8 @@ class EmbedConfig {
       }
       if (enableImageSharing) {
         result.config.sharing.enableImageSharing = true;
-        if (!facebookAppId) {
-          warning('facebook-app-id', `Please provide a facebook app id when enabling image sharing`)
-        }
-        else {
+        if (facebookAppId) {
           result.config.sharing.facebook.appId = facebookAppId
-        }
       }
     }
 
