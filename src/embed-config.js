@@ -46,9 +46,9 @@ class EmbedConfig {
       attributes['data-preview-count'] = config.previewCount
     }
 
-    if ('likes' in config) {
+    if ('likes' in config && config.likes) {
       attributes['data-likes-kind'] = config.likes.kind
-      if (config.likes && ('label' in config.likes)) {
+      if ('label' in config.likes) {
         attributes['data-likes-label-default'] = config.likes.label.default
         attributes['data-likes-label-given'] = config.likes.label.given
       }
@@ -112,6 +112,8 @@ class EmbedConfig {
           given: config.likes.label.given
         }
       }
+    } else {
+      doc.likes = null
     }
     if (config.kind === 'imagestream') {
       doc.hash_tag = config.hashTag // eslint-disable-line camelcase
