@@ -48,7 +48,7 @@ class EmbedConfig {
 
     if ('likes' in config) {
       attributes['data-likes-kind'] = config.likes.kind
-      if ('label' in config.likes) {
+      if (config.likes && ('label' in config.likes)) {
         attributes['data-likes-label-default'] = config.likes.label.default
         attributes['data-likes-label-given'] = config.likes.label.given
       }
