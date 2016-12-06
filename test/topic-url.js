@@ -1,12 +1,12 @@
-var topicUrl = require('..').topicUrl
+const topicUrl = require('..').topicUrl
 
-var expect = require('expect.js')
-var url = require('url')
+const expect = require('expect.js')
+const url = require('url')
 
-describe('topicUrl', function () {
-  describe('#fromConfig', function () {
-    context('invalid config passed fromConfig({config})', function () {
-      var errorExpectations = [
+describe('topicUrl', () => {
+  describe('#fromConfig', () => {
+    context('invalid config passed fromConfig({config})', () => {
+      const errorExpectations = [
         {
           it: 'requires a publication',
           config: {},
@@ -28,18 +28,18 @@ describe('topicUrl', function () {
           message: 'The response config.article object must have an `id` property'
         }
       ]
-      errorExpectations.forEach(function (err) {
-        it(err.it +' to throw ' + err.message, function () {
-          expect(function () {
+      errorExpectations.forEach(err => {
+        it(`${err.it} to throw ${err.message}`, () => {
+          expect(() => {
             topicUrl.fromConfig(err.config)
-          }).to.throwError(function (e) {
+          }).to.throwError(e => {
             expect(e.message).to.eql(err.message)
           })
         })
       })
     })
-    context('valid config passed fromConfig({config})', function () {
-      var expectations = [
+    context('valid config passed fromConfig({config})', () => {
+      const expectations = [
         {
           it: 'accepts the minimum viable config object',
           config: {
@@ -60,7 +60,7 @@ describe('topicUrl', function () {
               id: 'as?df=&#'
             }
           },
-          url: '/topics/oa/imagestream/' + encodeURIComponent('as?df=&#')
+          url: `/topics/oa/imagestream/${encodeURIComponent('as?df=&#')}`
         },
         {
           it: 'accepts long strange float-like values for article id',
@@ -74,11 +74,12 @@ describe('topicUrl', function () {
           url: '/topics/oa/imagestream/1.232323432333294743987894787337'
         }
       ]
-      expectations.forEach(function (expectation) {
-        it(expectation.it, function () {
-            expect(url.format(topicUrl.fromConfig(expectation.config))).to.eql(expectation.url)
-          })
+
+      expectations.forEach(expectation => {
+        it(expectation.it, () => {
+          expect(url.format(topicUrl.fromConfig(expectation.config))).to.eql(expectation.url)
+        })
       })
     })
   })
-});
+})
