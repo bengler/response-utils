@@ -174,4 +174,35 @@ describe('EmbedConfig', () => {
       })
     })
   })
+  describe('toEmbedTag', () => {
+    it('properly quotes attributes', () => {
+      const config = {
+        article: {
+          id: 2,
+          title: 'This dangerous characters like ", > and "> in it'
+        },
+        kind: 'imagestream'
+      }
+      const markup = EmbedConfig.toEmbedTagHTML(config)
+      expect(markup).to.be(
+        // eslint-disable-next-line max-len
+        '<div data-sprig-component="response" data-kind="imagestream" data-article-id="2" data-article-title="This dangerous characters like &quot;, &gt; and &quot;&gt; in it"></div>'
+      )
+    })
+    it('omits undefined config values', () => {
+      const config = {
+        article: {
+          url: undefined,
+          id: 2,
+          title: 'This dangerous characters like ", > and "> in it'
+        },
+        kind: 'imagestream'
+      }
+      const markup = EmbedConfig.toEmbedTagHTML(config)
+      expect(markup).to.be(
+        // eslint-disable-next-line max-len
+        '<div data-sprig-component="response" data-kind="imagestream" data-article-id="2" data-article-title="This dangerous characters like &quot;, &gt; and &quot;&gt; in it"></div>'
+      )
+    })
+  })
 })

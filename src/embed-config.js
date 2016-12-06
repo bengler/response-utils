@@ -1,6 +1,7 @@
 /* global document */
 
 const url = require('url')
+const escape = require('lodash/escape')
 const removeQueryParameter = require('./util/remove-query-parameter')
 
 const KINDS = ['imagestream', 'conversation', 'question', 'procon']
@@ -68,7 +69,10 @@ class EmbedConfig {
 
   static toEmbedTagHTML(config) {
     const attrs = EmbedConfig.toDataAttributes(config)
-    const serializedAttrs = Object.keys(attrs).map(attr => `${attr}=${attrs[attr]}`).join(' ')
+    const serializedAttrs = Object.keys(attrs)
+      .filter(attr => (typeof attrs[attr]) !== 'undefined')
+      .map(attr => `${attr}="${escape(attrs[attr])}"`)
+      .join(' ')
     return `<div ${serializedAttrs}></div>`
   }
 
