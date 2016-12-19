@@ -124,9 +124,7 @@ class EmbedConfig {
       doc.likes = null
     }
     if (config.kind === 'imagestream') {
-      if ('geoTag' in config) {
-        doc.geoTag = config.geoTag
-      }
+      doc.geo_tag = config.geoTag // eslint-disable-line camelcase
       doc.hash_tag = config.hashTag // eslint-disable-line camelcase
     }
     return doc
@@ -195,8 +193,8 @@ class EmbedConfig {
       if (geoTag) {
         if (VALID_GEO_TAG_VALUES.indexOf(geoTag) === -1) {
           warning('geo-tag', `Invalid config: data-geo-tag must be one of ${VALID_GEO_TAG_VALUES.join(', ')}`)
+          geoTag = undefined
         }
-        geoTag = undefined
       }
       if (STRIP_HASHTAG.test(hashTag)) {
         hashTag = hashTag.replace(STRIP_HASHTAG, '')
