@@ -6,6 +6,7 @@ const removeQueryParameter = require('./util/remove-query-parameter')
 
 const KINDS = ['imagestream', 'conversation', 'question', 'procon']
 const STRIP_HASHTAG = /[^a-z0-9\-_æøå]/ig
+const VALID_GEO_TAG_VALUES = ['require']
 
 class EmbedConfig {
 
@@ -58,6 +59,9 @@ class EmbedConfig {
     if (config.kind === 'imagestream') {
       if ('hashTag' in config) {
         attributes['data-hash-tag'] = config.hashTag
+      }
+      if ('geoTag' in config) {
+        attributes['data-geo-tag'] = config.geoTag
       }
       if ('sharing' in config) {
         attributes['data-enable-image-sharing'] = config.sharing.enableImageSharing
@@ -120,6 +124,9 @@ class EmbedConfig {
       doc.likes = null
     }
     if (config.kind === 'imagestream') {
+      if ('geoTag' in config) {
+        doc.geoTag = config.geoTag
+      }
       doc.hash_tag = config.hashTag // eslint-disable-line camelcase
     }
     return doc
@@ -152,8 +159,9 @@ class EmbedConfig {
       articleTitle,
       articleUrl,
       hashTag,
+      geoTag,
       autoSubscribe,
-      } = config
+    } = config
 
 
     if (!articleTitle) {
@@ -184,6 +192,12 @@ class EmbedConfig {
     }
 
     if (kind === 'imagestream') {
+      if (geoTag) {
+        if (VALID_GEO_TAG_VALUES.indexOf(geoTag) === -1) {
+          warning('geo-tag', `Invalid config: data-geo-tag must be one of ${VALID_GEO_TAG_VALUES.join(', ')}`)
+        }
+        geoTag = undefined
+      }
       if (STRIP_HASHTAG.test(hashTag)) {
         hashTag = hashTag.replace(STRIP_HASHTAG, '')
 
@@ -273,6 +287,9 @@ class EmbedConfig {
     if (kind === 'imagestream') {
       if (hashTag) {
         result.config.hashTag = hashTag
+      }
+      if (geoTag) {
+        result.config.geoTag = geoTag
       }
       if (enableImageSharing) {
         result.config.sharing.enableImageSharing = true
